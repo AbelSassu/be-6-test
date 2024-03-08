@@ -129,6 +129,7 @@
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Camera.cs" />
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\Checkout.cs" />
     <Compile Include="Models\Db.cs" />
     <Compile Include="Models\Ospite.cs" />
     <Compile Include="Models\Pensione.cs" />
@@ -190,6 +191,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Prenotazioni\Index.cshtml" />
+    <Content Include="Views\Prenotazioni\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

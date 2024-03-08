@@ -36,5 +36,7 @@ namespace Albergo.Models
         public Ospite Ospite { get; set; }
 
         public Camera Camera { get; set; }
+
+        public Checkout Checkout { get; set; }
     }
 }

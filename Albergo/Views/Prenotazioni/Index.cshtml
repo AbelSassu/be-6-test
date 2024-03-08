@@ -13,8 +13,11 @@
             <th>Data Prenotazione</th>
             <th>Data Arrivo</th>
             <th>Data Partenza</th>
+            <th>Nome</th>
+            <th>Cognome</th>
             <th>Numero Camera</th>
             <th>Tipo Pensione</th>
+            <th>Azioni</th>
         </tr>
     </thead>
     <tbody>
@@ -25,8 +28,14 @@
                 <td>@prenotazione.Data_Pren.ToString("yyyy-MM-dd")</td>
                 <td>@prenotazione.Data_Arrivo.ToString("yyyy-MM-dd")</td>
                 <td>@prenotazione.Data_Partenza.ToString("yyyy-MM-dd")</td>
+                <td>@prenotazione.Ospite.Nome</td>
+                <td>@prenotazione.Ospite.Cognome</td>
                 <td>@prenotazione.Camera.Numero</td>
                 <td>@prenotazione.Pensione.Tipo</td>
+                <td class="d-flex">
+                    @Html.ActionLink("Dettagli", "Details", "Prenotazioni", new { id = prenotazione.Prenotazione_ID }, new { @class = "btn btn-outline-info me-2" })
+                    @Html.ActionLink("Aggiungi servizi", "AddServizi", "Prenotazioni", new { id = prenotazione.Prenotazione_ID }, new { @class = "btn btn-outline-success" })
+                </td>
             </tr>
         }
     </tbody>
