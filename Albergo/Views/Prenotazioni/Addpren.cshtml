@@ -16,23 +16,21 @@
 
     <div class="form-group mb-4">
         @Html.LabelFor(model => model.Data_Arrivo)
-        @Html.EditorFor(model => model.Data_Arrivo, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+        @Html.EditorFor(model => model.Data_Arrivo, new { htmlAttributes = new { @class = "form-control", type = "datetime-local", id = "Data_Arrivo" } })
         @Html.ValidationMessageFor(model => model.Data_Arrivo, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group mb-4">
+    <div class="form-group ">
         @Html.LabelFor(model => model.Data_Partenza)
-        @Html.EditorFor(model => model.Data_Partenza, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+        @Html.EditorFor(model => model.Data_Partenza, new { htmlAttributes = new { @class = "form-control", type = "datetime-local", id = "Data_Partenza" } })
         @Html.ValidationMessageFor(model => model.Data_Partenza, "", new { @class = "text-danger" })
     </div>
 
-    <div class="form-group mb-4">
-        @Html.LabelFor(model => model.AnnoProg, "Anno Progressivo")
-        @Html.EditorFor(model => model.AnnoProg, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.AnnoProg, "", new { @class = "text-danger" })
+    <div id="dateError" class="text-danger mb-4" style="display: none;">
+        La data di arrivo non può superare la data di partenza.
     </div>
 
-    <div class="form-group mb-4">
+    <div class="form-group mb-4 mt-4">
         @Html.LabelFor(model => model.Pensione_ID, "Tipologia pensione")
         @Html.DropDownListFor(model => model.Pensione_ID, new SelectList(ViewBag.Pensioni, "Pensione_ID", "Tipo"), "-- Seleziona Pensione --", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Pensione_ID, "", new { @class = "text-danger" })
@@ -40,7 +38,7 @@
 
     <div class="form-group mb-4">
         @Html.LabelFor(model => model.Ospite_ID, "ID Ospite")
-        @Html.EditorFor(model => model.Ospite_ID, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.DropDownListFor(model => model.Ospite_ID, new SelectList(ViewBag.Ospiti, "Ospite_ID", "NomeCompletoCodFisc"), "-- Seleziona Ospite --", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Ospite_ID, "", new { @class = "text-danger" })
     </div>
 
@@ -54,3 +52,28 @@
         <input type="submit" value="Aggiungi prenotazione" class="btn btn-primary" />
     </div>
 }
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        function validateDateRange() {
+            var arrivalDate = new Date($('#Data_Arrivo').val());
+            var departureDate = new Date($('#Data_Partenza').val());
+
+            if (arrivalDate > departureDate) {
+
+                $('#dateError').show();
+                $('input[type="submit"]').prop('disabled', true);
+            } else {
+
+                $('#dateError').hide();
+                $('input[type="submit"]').prop('disabled', false);
+            }
+        }
+
+
+        $('#Data_Arrivo, #Data_Partenza').change(validateDateRange);
+    });
+</script>

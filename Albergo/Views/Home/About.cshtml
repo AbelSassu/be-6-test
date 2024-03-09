@@ -1,9 +1,45 @@
 ﻿@{
-    ViewBag.Title = "About";
-}
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
+    ViewBag.Title = "Ricerca";
+}﻿
 
-    <p>Use this area to provide additional information.</p>
+<main aria-labelledby="title">
+    <h2 class="mt-5 mb-4">Ricerca</h2>
+
+    <h4 class="mb-4">Inserisci il codice fiscale dell'ospite. (es RSSMRA01A01H123A, BLUFRA08H08U234H)</h4>
+
+    <div class="form-group">
+        <label for="codFiscInput">Codice Fiscale:</label>
+        <input type="text" class="form-control mt-2" id="codFiscInput" name="codFiscInput" placeholder="Inserisci i 16 caratteri/numeri">
+    </div>
+    <button id="fetchDataButton" class="d-block btn btn-outline-info fw-bold mt-4 mb-4">Cerca ospite</button>
+    <div id="OspitiContainer"></div>
+
+    <script>
+        document.getElementById('fetchDataButton').addEventListener('click', function () {
+            const codFisc = document.getElementById('codFiscInput').value;
+            fetch('/Prenotazioni/GetCliente?codFisc=' + codFisc)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('OspitiContainer').innerHTML = '';
+                    data.forEach(ospiti => {
+                        const div = document.createElement('div');
+                        div.innerHTML = `
+                                                <h3>Ospite ID: ${ospiti.Ospite_ID}</h3>
+                                                <p>Nome: ${ospiti.Nome}</p>
+                                                <p>Cognome: ${ospiti.Cognome}</p>
+                                                <p>Città: ${ospiti.Citta}</p>
+                                                <p>Provincia: ${ospiti.Provincia}</p>
+                                                <p>Email: ${ospiti.Email}</p>
+                                                <p>Telefono: ${ospiti.Telefono}</p>
+                                                <p>Codice Fiscale: ${ospiti.Cod_Fisc}</p>
+                                            `;
+                        document.getElementById('OspitiContainer').appendChild(div);
+                    });
+                })
+                .catch(error => {
+                    console.error('Si è verificato un errore durante la richiesta:', error);
+                });
+        });
+
+    </script>
 </main>

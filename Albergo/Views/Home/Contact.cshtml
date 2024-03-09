@@ -1,19 +1,40 @@
 ﻿@{
-    ViewBag.Title = "Contact";
-}
+    ViewBag.Title = "Lista";
+}﻿
+
 <main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
+    <h2 class="mt-5 mb-4">Lista degli ospiti prenotati con pensione completa</h2>
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+    <p>Premendo il pulsante verrà fatta una ricerca sul numero di persone.</p>
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
+    <button class="btn btn-outline-info fw-bold mt-2 mb-4" id="fetchCountButton">Cerca</button>
+    <div id="count-container"></div>
+
+    <script>
+        document.getElementById('fetchCountButton').addEventListener('click', function () {
+            fetch('/Prenotazioni/GetPensioneCompleta')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Risposta JSON ricevuta:", data);
+                    if (data.error) {
+                        console.error('Si è verificato un errore durante la richiesta:', data.error);
+                    } else {
+                        if (data.NumeroPrenotazioni !== undefined) {
+                            const paragraph = document.createElement('p');
+                            paragraph.textContent = 'Numero di prenotazioni: ' + data.NumeroPrenotazioni;
+                            document.getElementById('count-container').innerHTML = '';
+                            document.getElementById('count-container').appendChild(paragraph);
+                        } else {
+                            console.error('La proprietà "NumeroPrenotazioni" non è definita nella risposta JSON.');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Si è verificato un errore durante la richiesta:', error);
+                });
+        });
+
+
+
+    </script>
 </main>
