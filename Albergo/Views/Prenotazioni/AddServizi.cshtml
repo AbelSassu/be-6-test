@@ -1,0 +1,101 @@
+﻿@model Albergo.Models.Prenotazione
+@{
+    ViewBag.Title = "Aggiungi Servizi";
+}
+
+<h2 class="mt-5 mb-4">Dettagli Soggiorno</h2>
+
+<table class="mb-5">
+    <tr>
+        <td>Prenotazione ID:</td>
+        <td>@Model.Prenotazione_ID</td>
+    </tr>
+    <tr>
+        <td>Nome:</td>
+        <td>@Model.Ospite.Nome</td>
+    </tr>
+    <tr>
+        <td>Cognome:</td>
+        <td>@Model.Ospite.Cognome</td>
+    </tr>
+    <tr>
+        <td>Numero Camera:</td>
+        <td>@Model.Camera.Numero</td>
+    </tr>
+    <tr>
+        <td>Data Arrivo:</td>
+        <td>@Model.Data_Arrivo.ToShortDateString()</td>
+    </tr>
+    <tr>
+        <td>Data Partenza:</td>
+        <td>@Model.Data_Partenza.ToShortDateString()</td>
+    </tr>
+    @if (Model.Checkout != null)
+    {
+        <tr>
+            <td>Notti:</td>
+            <td>@Model.Checkout.Notti</td>
+        </tr>
+        <tr>
+            <td>Totale Servizi:</td>
+            <td>@Model.Checkout.TotServizi.ToString("C")</td>
+        </tr>
+        <tr>
+            <td>Totale soggiorno camera:</td>
+            <td>@Model.Checkout.TotPren.ToString("C")</td>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <td colspan="2">Dettagli checkout non disponibili</td>
+        </tr>
+    }
+</table>
+
+<h2 class="mb-5">Aggiungi servizi</h2>
+<form method="post" action="@Url.Action("AddServizi", "Prenotazioni")">
+    <input type="hidden" id="Prenotazione_ID" name="Prenotazione_ID" value="@Model.Prenotazione_ID">
+    <input type="hidden" id="selectedServizio_ID" name="selectedServizio_ID" value="" class="mb-4">
+    <label class="mb-4" for="Servizio_ID">Servizio:</label>
+
+    <select id="Servizio_ID" name="Servizio_ID" onchange="updateSelectedServizioID(this)">
+        @foreach (var servizio in ViewBag.ServiziPrenotati)
+        {
+            <option value="@servizio.Servizio_ID">@servizio.Tipo</option>
+        }
+    </select>
+
+    <br />
+    <label for="Data_Serv">Data Servizio:</label>
+    <input type="date" class="mb-4" id="Data_Serv" name="Data_Serv" min="@Model.Data_Arrivo.ToString("yyyy-MM-dd")" max="@Model.Data_Partenza.ToString("yyyy-MM-dd")" onchange="filterDates()">
+    <br />
+    <label for="Quantita">Quantità:</label>
+    <input type="number" id="Quantita" name="Quantita" min="1" class="mb-4">
+    <br />
+    <label for="PrezzoServ">Prezzo Servizio:</label>
+    <input type="text" id="PrezzoServ" name="PrezzoServ" class="mb-4">
+    <br />
+    <input class="btn btn-outline-info fw-bold" type="submit" value="Aggiungi">
+</form>
+
+<script>
+    function updateSelectedServizioID(selectElement) {
+        var selectedServizioID = selectElement.value;
+        document.getElementById("selectedServizio_ID").value = selectedServizioID;
+    }
+</script>
+
+
+<script>
+    function filterDates() {
+        var dataArrivo = new Date('@Model.Data_Arrivo.ToString("yyyy-MM-dd")');
+        var dataPartenza = new Date('@Model.Data_Partenza.ToString("yyyy-MM-dd")');
+        var dataServInput = document.getElementById("Data_Serv");
+        var dataServ = new Date(dataServInput.value);
+
+        if (dataServ < dataArrivo || dataServ > dataPartenza) {
+            dataServInput.value = '';
+        }
+    }
+</script>

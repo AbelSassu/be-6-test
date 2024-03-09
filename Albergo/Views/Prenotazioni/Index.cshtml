@@ -4,7 +4,7 @@
     ViewBag.Title = "Prenotazioni";
 }
 
-<h2>Prenotazioni</h2>
+<h2 class="mt-5 mb-4">Prenotazioni</h2>
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -23,16 +23,16 @@
     <tbody>
         @foreach (var prenotazione in Model)
         {
-            <tr>
-                <td>@prenotazione.Prenotazione_ID</td>
-                <td>@prenotazione.Data_Pren.ToString("yyyy-MM-dd")</td>
-                <td>@prenotazione.Data_Arrivo.ToString("yyyy-MM-dd")</td>
-                <td>@prenotazione.Data_Partenza.ToString("yyyy-MM-dd")</td>
-                <td>@prenotazione.Ospite.Nome</td>
-                <td>@prenotazione.Ospite.Cognome</td>
-                <td>@prenotazione.Camera.Numero</td>
-                <td>@prenotazione.Pensione.Tipo</td>
-                <td class="d-flex">
+            <tr >
+                <td class="pt-3 text-center">@prenotazione.Prenotazione_ID</td>
+                <td class="pt-3 text-center">@prenotazione.Data_Pren.ToString("yyyy-MM-dd")</td>
+                <td class="pt-3 text-center">@prenotazione.Data_Arrivo.ToString("yyyy-MM-dd")</td>
+                <td class="pt-3 text-center">@prenotazione.Data_Partenza.ToString("yyyy-MM-dd")</td>
+                <td class="pt-3 text-center">@prenotazione.Ospite.Nome</td>
+                <td class="pt-3 text-center">@prenotazione.Ospite.Cognome</td>
+                <td class="pt-3 text-center">@prenotazione.Camera.Numero</td>
+                <td class="pt-3 text-center">@prenotazione.Pensione.Tipo</td>
+                <td class="d-flex justify-content-evenly">
                     @Html.ActionLink("Dettagli", "Details", "Prenotazioni", new { id = prenotazione.Prenotazione_ID }, new { @class = "btn btn-outline-info me-2" })
                     @Html.ActionLink("Aggiungi servizi", "AddServizi", "Prenotazioni", new { id = prenotazione.Prenotazione_ID }, new { @class = "btn btn-outline-success" })
                 </td>

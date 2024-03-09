@@ -1,45 +1,57 @@
 ﻿@model Albergo.Models.Prenotazione
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Dettagli";
 }
 
-<h2>Details</h2>
+<h2 class="mt-5 mb-4">Dettagli soggiorno ospite</h2>
 
-<h2>Checkout Details</h2>
-
-<div>
-    <p>Prenotazione ID:</p>
-
-    <p>@Model.Prenotazione_ID</p>
-
-    <p>@Model.Ospite.Nome</p>
-
-    <p>@Model.Ospite.Cognome</p>
-
-    <p>Camera Numero:</p>
-
-    <p>@Model.Camera.Numero</p>
-
-    <p>Data Arrivo:</p>
-    <p>@Model.Data_Arrivo.ToShortDateString()</p>
-
-    <p>Data Partenza:</p>
-    <p>@Model.Data_Partenza.ToShortDateString()</p>
-
+<table>
+    <tr>
+        <td>Prenotazione ID:</td>
+        <td>@Model.Prenotazione_ID</td>
+    </tr>
+    <tr>
+        <td>Nome:</td>
+        <td>@Model.Ospite.Nome</td>
+    </tr>
+    <tr>
+        <td>Cognome:</td>
+        <td>@Model.Ospite.Cognome</td>
+    </tr>
+    <tr>
+        <td>Numero Camera:</td>
+        <td>@Model.Camera.Numero</td>
+    </tr>
+    <tr>
+        <td>Data Arrivo:</td>
+        <td>@Model.Data_Arrivo.ToShortDateString()</td>
+    </tr>
+    <tr>
+        <td>Data Partenza:</td>
+        <td>@Model.Data_Partenza.ToShortDateString()</td>
+    </tr>
     @if (Model.Checkout != null)
     {
-        <p>Notti:</p>
-        <p>@Model.Checkout.Notti</p>
-
-        <p>Totale Servizi:</p>
-        <p>@Model.Checkout.TotServizi.ToString("C")</p>
-
-        <p>Totale Prenotazione:</p>
-        <p>@Model.Checkout.TotPren.ToString("C")</p>
+        <tr>
+            <td>Notti:</td>
+            <td>@Model.Checkout.Notti</td>
+        </tr>
+        <tr>
+            <td>Totale Servizi:</td>
+            <td>@Model.Checkout.TotServizi.ToString("C")</td>
+        </tr>
+        <tr>
+            <td>Totale soggiorno camera:</td>
+            <td>@Model.Checkout.TotPren.ToString("C")</td>
+        </tr>
     }
     else
     {
-        <p>Checkout details not available</p>
+        <tr>
+            <td colspan="2">Dettagli checkout non disponibili</td>
+        </tr>
     }
-</div>
+</table>
+
+
 
